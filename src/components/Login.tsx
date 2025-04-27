@@ -1,7 +1,9 @@
 import Header from './Header';
+import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
-import netflix_bg from '../assets/netflix_bg.jpg';
 import { validateForm } from '../utils/validate';
+import netflix_bg from '../assets/netflix_bg.jpg';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
@@ -13,13 +15,39 @@ const Login = () => {
 
   const handleFormToggle = () => {
     setIsSignIn(!isSignIn);
+    setErrorMessage('');
   };
+
   const handleSubmit = () => {
     if (email?.current && password?.current) {
       const error = validateForm(email.current.value, password.current.value, name.current?.value);
       if (error) {
         setErrorMessage(error);
+        return;
       } else {
+        if (isSignIn) {
+          signInWithEmailAndPassword(auth, email.current.value, password.current.value)
+            .then(userCredential => {
+              const user = userCredential.user;
+              console.log(user);
+            })
+            .catch(error => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              setErrorMessage(errorCode + '-' + errorMessage);
+            });
+        } else {
+          createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+            .then(userCredential => {
+              console.log(userCredential);
+            })
+            .catch(error => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+
+              setErrorMessage(errorCode + '-' + errorMessage);
+            });
+        }
         setErrorMessage('');
       }
     }
