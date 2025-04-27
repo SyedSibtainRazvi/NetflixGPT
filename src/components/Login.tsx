@@ -2,6 +2,7 @@ import Header from './Header';
 import { useState, useRef } from 'react';
 import netflix_bg from '../assets/netflix_bg.jpg';
 import { validateForm } from '../utils/validate';
+
 const Login = () => {
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
