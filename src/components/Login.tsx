@@ -3,6 +3,7 @@ import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
 import { validateForm } from '../utils/validate';
 import netflix_bg from '../assets/netflix_bg.jpg';
+import firebaseErrorMessages from '../utils/firebaseErrorMessages';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
@@ -18,40 +19,40 @@ const Login = () => {
     setErrorMessage('');
   };
 
-  const handleSubmit = () => {
-    if (email?.current && password?.current) {
-      const error = validateForm(email.current.value, password.current.value, name.current?.value);
-      if (error) {
-        setErrorMessage(error);
-        return;
-      } else {
-        if (isSignIn) {
-          signInWithEmailAndPassword(auth, email.current.value, password.current.value)
-            .then(userCredential => {
-              const user = userCredential.user;
-              console.log(user);
-            })
-            .catch(error => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
-              setErrorMessage(errorCode + '-' + errorMessage);
-            });
-        } else {
-          createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
-            .then(userCredential => {
-              console.log(userCredential);
-            })
-            .catch(error => {
-              const errorCode = error.code;
-              const errorMessage = error.message;
+  const handleSubmit = async () => {
+    setErrorMessage('');
 
-              setErrorMessage(errorCode + '-' + errorMessage);
-            });
-        }
-        setErrorMessage('');
+    if (!email.current || !password.current) {
+      setErrorMessage('Email and password are required.');
+      return;
+    }
+
+    const error = validateForm(email.current.value, password.current.value, name.current?.value);
+    if (error) {
+      setErrorMessage(error);
+      return;
+    }
+
+    try {
+      if (isSignIn) {
+        const userCredential = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
+        console.log(userCredential.user);
+      } else {
+        const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
+        console.log(userCredential.user);
+      }
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
+        const { code, message } = error as { code: string; message: string };
+        setErrorMessage(firebaseErrorMessages[code] || message || 'An unknown error occurred.');
+      } else if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage('An unknown error occurred');
       }
     }
   };
+
   return (
     <div className="relative min-h-screen w-full">
       <Header />
