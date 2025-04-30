@@ -1,12 +1,14 @@
 import Header from './Header';
 import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { validateForm } from '../utils/validate';
 import netflix_bg from '../assets/netflix_bg.jpg';
 import firebaseErrorMessages from '../utils/firebaseErrorMessages';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 
 const Login = () => {
+  const navigate = useNavigate();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -37,9 +39,11 @@ const Login = () => {
       if (isSignIn) {
         const userCredential = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
         console.log(userCredential.user);
+        navigate('/browse');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
         console.log(userCredential.user);
+        navigate('/browse');
       }
     } catch (error: unknown) {
       if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
