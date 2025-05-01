@@ -1,6 +1,8 @@
 import Header from './Header';
 import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { addUser } from '../utils/userSlice';
 import { useNavigate } from 'react-router-dom';
 import { validateForm } from '../utils/validate';
 import netflix_bg from '../assets/netflix_bg.jpg';
@@ -9,6 +11,7 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfi
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -45,6 +48,11 @@ const Login = () => {
           await updateProfile(userCredential.user, {
             displayName: name?.current.value,
           });
+
+          if (auth.currentUser) {
+            const { uid, email, displayName } = auth.currentUser;
+            dispatch(addUser({ uid, email, displayName }));
+          }
         }
         navigate('/browse');
       }
