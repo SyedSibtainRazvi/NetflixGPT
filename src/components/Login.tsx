@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { validateForm } from '../utils/validate';
 import netflix_bg from '../assets/netflix_bg.jpg';
 import firebaseErrorMessages from '../utils/firebaseErrorMessages';
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -37,12 +37,15 @@ const Login = () => {
 
     try {
       if (isSignIn) {
-        const userCredential = await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
-        console.log(userCredential.user);
+        await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
         navigate('/browse');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
-        console.log(userCredential.user);
+        if (userCredential.user && name?.current?.value) {
+          await updateProfile(userCredential.user, {
+            displayName: name?.current.value,
+          });
+        }
         navigate('/browse');
       }
     } catch (error: unknown) {

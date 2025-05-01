@@ -1,5 +1,5 @@
-import Browse from './Browse';
 import Login from './Login';
+import Browse from './Browse';
 import { useEffect } from 'react';
 import { auth } from '../../firebase';
 import { useDispatch } from 'react-redux';
