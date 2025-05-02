@@ -3,14 +3,12 @@ import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
-import { useNavigate } from 'react-router-dom';
 import { validateForm } from '../utils/validate';
 import netflix_bg from '../assets/netflix_bg.jpg';
 import firebaseErrorMessages from '../utils/firebaseErrorMessages';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile } from 'firebase/auth';
 
 const Login = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [isSignIn, setIsSignIn] = useState(true);
   const [errorMessage, setErrorMessage] = useState('');
@@ -41,7 +39,6 @@ const Login = () => {
     try {
       if (isSignIn) {
         await signInWithEmailAndPassword(auth, email.current.value, password.current.value);
-        navigate('/browse');
       } else {
         const userCredential = await createUserWithEmailAndPassword(auth, email.current.value, password.current.value);
         if (userCredential.user && name?.current?.value) {
@@ -54,7 +51,6 @@ const Login = () => {
             dispatch(addUser({ uid, email, displayName }));
           }
         }
-        navigate('/browse');
       }
     } catch (error: unknown) {
       if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
