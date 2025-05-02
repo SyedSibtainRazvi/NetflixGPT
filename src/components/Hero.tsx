@@ -1,3 +1,4 @@
+import HeroVideo from './HeroVideo';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/appStore';
 import { IMAGE_BASE_URL } from '../utils/constant';
@@ -6,19 +7,13 @@ const Hero = () => {
   const movies = useSelector((store: RootState) => store.movies.nowPlayingMovies);
   if (!movies || movies.length === 0) return null;
 
-  const mainMovie = movies[3];
+  const mainMovie = movies[0];
   const { title, overview, backdrop_path, poster_path, trailer } = mainMovie;
 
   return (
     <div className="relative w-full h-[90vh] flex items-end bg-black overflow-hidden">
       {trailer && trailer.key ? (
-        <iframe
-          className="absolute top-0 left-0 w-full h-full object-cover pointer-events-none"
-          src={`https://www.youtube.com/embed/${trailer.key}?autoplay=1&mute=1&controls=0&loop=1&playlist=${trailer.key}`}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
+        <HeroVideo keyId={trailer.key} />
       ) : (
         <div
           className="absolute top-0 left-0 w-full h-full bg-cover bg-center"
@@ -28,8 +23,6 @@ const Hero = () => {
           }}
         ></div>
       )}
-
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
 
       <div className="relative z-10 p-8 flex flex-col items-start space-y-6 w-full max-w-2xl">
         <img
