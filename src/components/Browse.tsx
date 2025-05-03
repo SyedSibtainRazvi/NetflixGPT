@@ -1,10 +1,14 @@
 import Hero from './Hero';
 import Header from './Header';
-import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 import MovieContainer from './movie/MovieContainer';
+import usePopularMovies from '../hooks/usePopularMovies';
+import useUpcomingMovies from '../hooks/useUpcomingMovies';
+import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
 
 const Browse = () => {
   useNowPlayingMovies();
+  usePopularMovies();
+  useUpcomingMovies();
 
   return (
     <>

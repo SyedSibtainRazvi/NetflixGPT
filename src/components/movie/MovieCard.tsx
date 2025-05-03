@@ -6,7 +6,7 @@ const MovieCard = ({ title, posterPath }: { title: string; posterPath: string })
       <img
         src={POSTER_BASE_URL + posterPath}
         alt={`Poster of ${title}`}
-        className="w-full h-72 object-cover"
+        className="w-full h-72 object-cover rounded"
         loading="lazy"
       />
     </div>

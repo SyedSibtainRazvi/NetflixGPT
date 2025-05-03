@@ -28,10 +28,14 @@ export interface Movie {
 
 interface MoviesState {
   nowPlayingMovies: Movie[] | null;
+  popularMovies: Movie[] | null;
+  upcomingMovies: Movie[] | null;
 }
 
 const initialState: MoviesState = {
   nowPlayingMovies: null,
+  popularMovies: null,
+  upcomingMovies: null,
 };
 
 const moviesSlice = createSlice({
@@ -41,8 +45,14 @@ const moviesSlice = createSlice({
     addNowPlayingMovies: (state, action: PayloadAction<Movie[]>) => {
       state.nowPlayingMovies = action.payload;
     },
+    addPopularMovies: (state, action: PayloadAction<Movie[]>) => {
+      state.popularMovies = action.payload;
+    },
+    addUpcomingMovies: (state, action: PayloadAction<Movie[]>) => {
+      state.upcomingMovies = action.payload;
+    },
   },
 });
 
-export const { addNowPlayingMovies } = moviesSlice.actions;
+export const { addNowPlayingMovies, addPopularMovies, addUpcomingMovies } = moviesSlice.actions;
 export default moviesSlice.reducer;
