@@ -8,7 +8,7 @@ const MovieContainer = () => {
 
   return (
     <div className="bg-black">
-      <div className="-mt-32 relative">
+      <div className="sm:-mt-32 -mt-26 relative">
         <MovieList title="Now Playing" movies={nowPlayingMovies} />
       </div>
       <MovieList title="Now Playing" movies={nowPlayingMovies} />
