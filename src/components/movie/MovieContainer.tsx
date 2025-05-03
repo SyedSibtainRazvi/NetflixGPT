@@ -1,6 +1,8 @@
-import MovieList from './MovieList';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../utils/appStore';
+import React, { Suspense } from 'react';
+
+const MovieList = React.lazy(() => import('./MovieList'));
 
 const MovieContainer = () => {
   const nowPlayingMovies = useSelector((store: RootState) => store.movies.nowPlayingMovies);
@@ -12,10 +14,16 @@ const MovieContainer = () => {
   return (
     <div className="bg-black">
       <div className="sm:-mt-32 -mt-26 relative">
-        <MovieList title="Now Playing" movies={nowPlayingMovies} />
+        <Suspense fallback={<div>Loading...</div>}>
+          <MovieList title="Now Playing" movies={nowPlayingMovies} />
+        </Suspense>
       </div>
-      <MovieList title="Popular Movies" movies={popularMovies} />
-      <MovieList title="Upcoming Movies" movies={upcomingMovies} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <MovieList title="Popular Movies" movies={popularMovies} />
+      </Suspense>
+      <Suspense fallback={<div>Loading...</div>}>
+        <MovieList title="Upcoming Movies" movies={upcomingMovies} />
+      </Suspense>
     </div>
   );
 };
