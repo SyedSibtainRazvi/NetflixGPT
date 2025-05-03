@@ -13,7 +13,7 @@ const Hero = () => {
   const { title, overview, backdrop_path, poster_path, trailer } = mainMovie;
 
   return (
-    <div className="relative w-full h-[90vh] flex items-end bg-black overflow-hidden">
+    <div className="relative w-full h-[90vh] flex items-center bg-black overflow-hidden">
       {trailer && trailer.key ? (
         <HeroVideo keyId={trailer.key} />
       ) : (
@@ -31,7 +31,7 @@ const Hero = () => {
           src={poster_path ? `${IMAGE_BASE_URL}${poster_path}` : ''}
           alt={title}
           loading="lazy"
-          className="w-32 rounded-lg shadow-lg mb-4"
+          className="w-32 rounded shadow-lg mb-4"
         />
         <h1 className="text-4xl font-bold mb-4 drop-shadow-lg text-white">{title}</h1>
         <p className="mb-6 text-lg drop-shadow text-white">{overview}</p>
