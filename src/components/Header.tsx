@@ -1,9 +1,10 @@
-import { useEffect } from 'react';
 import { auth } from '../../firebase';
 import { signOut } from 'firebase/auth';
 import userLogo from '../assets/user.jpg';
+import { useEffect, useState } from 'react';
 import { RootState } from '../utils/appStore';
 import { useNavigate } from 'react-router-dom';
+import arrowDown from '../assets/arrow_down.svg';
 import { onAuthStateChanged } from 'firebase/auth';
 import netflix_logo from '../assets/netflix_logo.png';
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state: RootState) => state.user);
+  const [dropdown, setDropdown] = useState(false);
 
   const handleSignout = async () => {
     try {
@@ -20,6 +22,10 @@ const Header = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleClick = () => {
+    setDropdown(!dropdown);
   };
 
   useEffect(() => {
@@ -45,10 +51,22 @@ const Header = () => {
         <img src={netflix_logo} alt="netflix" className="w-28 sm:w-44" />
         {user && (
           <div className="flex items-center gap-4">
-            <img src={userLogo} alt="user" className="w-8 h-8" />
-            <button onClick={handleSignout} className="cursor-pointer text-white font-bold">
-              Sign Out
-            </button>
+            <img src={userLogo} alt="user" className="w-8 h-8 rounded cursor-pointer" />
+            <img
+              src={arrowDown}
+              alt="arrow"
+              onClick={handleClick}
+              className={`w-4 h-4 transition-transform duration-300 ${dropdown ? 'rotate-180' : ''}`}
+            />
+            <div
+              className={`absolute bg-black/80 top-16 right-4 p-4 rounded transition-all duration-300 ${
+                dropdown ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2 pointer-events-none'
+              }`}
+            >
+              <button onClick={handleSignout} className="cursor-pointer text-white font-bold">
+                Sign Out
+              </button>
+            </div>
           </div>
         )}
       </div>

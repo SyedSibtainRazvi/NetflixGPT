@@ -39,7 +39,7 @@ const Hero = () => {
           <button className="flex items-center justify-center cursor-pointer bg-white text-black px-4 md:px-6 py-2 rounded font-semibold hover:bg-gray-200 transition w-full sm:w-auto">
             Play
           </button>
-          <button className="flex items-center justify-center cursor-pointer bg-gray-700 bg-opacity-70 text-white px-4 md:px-6 py-2 rounded font-semibold hover:bg-gray-600 transition w-full sm:w-auto">
+          <button className="flex items-center justify-center cursor-pointer bg-gray-700/50 text-white px-4 md:px-6 py-2 rounded font-semibold hover:bg-gray-600 transition w-full sm:w-auto">
             More Info
           </button>
         </div>
