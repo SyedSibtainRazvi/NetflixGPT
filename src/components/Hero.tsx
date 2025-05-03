@@ -1,6 +1,4 @@
 import HeroVideo from './HeroVideo';
-import { FaPlay } from 'react-icons/fa';
-import { LuInfo } from 'react-icons/lu';
 import { useSelector } from 'react-redux';
 import { RootState } from '../utils/appStore';
 import { IMAGE_BASE_URL } from '../utils/constant';
@@ -39,10 +37,9 @@ const Hero = () => {
         </p>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full">
           <button className="flex items-center justify-center cursor-pointer bg-white text-black px-4 md:px-6 py-2 rounded font-semibold hover:bg-gray-200 transition w-full sm:w-auto">
-            <FaPlay className="mr-2" /> Play
+            Play
           </button>
           <button className="flex items-center justify-center cursor-pointer bg-gray-700 bg-opacity-70 text-white px-4 md:px-6 py-2 rounded font-semibold hover:bg-gray-600 transition w-full sm:w-auto">
-            <LuInfo className="mr-2" />
             More Info
           </button>
         </div>
