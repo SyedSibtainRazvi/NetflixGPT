@@ -6,6 +6,7 @@ import { RootState } from '../utils/appStore';
 import { useNavigate } from 'react-router-dom';
 import arrowDown from '../assets/arrow_down.svg';
 import { onAuthStateChanged } from 'firebase/auth';
+import { toggleGptSearch } from '../utils/gptSlice';
 import netflix_logo from '../assets/netflix_logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
@@ -28,6 +29,10 @@ const Header = () => {
     setDropdown(!dropdown);
   };
 
+  const handleGptSearch = () => {
+    dispatch(toggleGptSearch());
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       if (user) {
@@ -47,16 +52,22 @@ const Header = () => {
 
   return (
     <>
-      <div className="absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-row justify-between items-center">
+      <div className="absolute w-screen px-6 py-2 bg-gradient-to-b from-black z-10 flex flex-row justify-between items-center">
         <img src={netflix_logo} alt="netflix" className="w-28 sm:w-44" />
         {user && (
           <div className="flex items-center gap-4">
+            <button
+              onClick={handleGptSearch}
+              className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-1 px-4 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-200"
+            >
+              GPT Search
+            </button>
             <img src={userLogo} alt="user" className="w-8 h-8 rounded cursor-pointer" />
             <img
               src={arrowDown}
               alt="arrow"
               onClick={handleClick}
-              className={`w-4 h-4 transition-transform duration-300 ${dropdown ? 'rotate-180' : ''}`}
+              className={`w-4 h-4 cursor-pointer transition-transform duration-300 ${dropdown ? 'rotate-180' : ''}`}
             />
             <div
               className={`absolute bg-black/80 top-16 right-4 p-4 rounded transition-all duration-300 ${
