@@ -14,8 +14,9 @@ import { addUser, removeUser } from '../utils/userSlice';
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const user = useSelector((state: RootState) => state.user);
   const [dropdown, setDropdown] = useState(false);
+  const user = useSelector((state: RootState) => state.user);
+  const gptSearch = useSelector((state: RootState) => state.gpt.showGptSearch);
 
   const handleSignout = async () => {
     try {
@@ -60,7 +61,7 @@ const Header = () => {
               onClick={handleGptSearch}
               className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-1 px-4 rounded-xl shadow-md hover:shadow-lg hover:scale-105 transition-transform duration-200"
             >
-              GPT Search
+              {gptSearch ? 'Home' : 'GPT Search'}
             </button>
             <img src={userLogo} alt="user" className="w-8 h-8 rounded cursor-pointer" />
             <img
