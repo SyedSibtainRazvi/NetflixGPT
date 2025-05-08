@@ -10,6 +10,7 @@ import { toggleGptSearch } from '../utils/gptSlice';
 import netflix_logo from '../assets/netflix_logo.png';
 import { useSelector, useDispatch } from 'react-redux';
 import { addUser, removeUser } from '../utils/userSlice';
+import { removeGptMovieResult } from '../utils/gptSlice';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ const Header = () => {
 
   const handleGptSearch = () => {
     dispatch(toggleGptSearch());
+    dispatch(removeGptMovieResult());
   };
 
   useEffect(() => {
