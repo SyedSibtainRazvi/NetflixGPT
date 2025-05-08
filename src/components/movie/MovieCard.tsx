@@ -1,6 +1,7 @@
 import { POSTER_BASE_URL } from '../../utils/constant';
 
 const MovieCard = ({ title, posterPath }: { title: string; posterPath: string }) => {
+  if (!posterPath) return null;
   return (
     <div className="w-32 h-auto sm:w-48 flex-shrink-0">
       <img

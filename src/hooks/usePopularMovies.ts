@@ -1,10 +1,12 @@
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { RootState } from '../utils/appStore';
 import { API_OPTIONS } from '../utils/apiOptions';
+import { useDispatch, useSelector } from 'react-redux';
 import { addPopularMovies, Movie } from '../utils/moviesSlice';
 
 const usePopularMovies = () => {
   const dispatch = useDispatch();
+  const popularMovies = useSelector((store: RootState) => store.movies.popularMovies);
 
   const getPopularMovies = async () => {
     try {
@@ -25,7 +27,9 @@ const usePopularMovies = () => {
   };
 
   useEffect(() => {
-    getPopularMovies();
+    if (!popularMovies || popularMovies.length === 0) {
+      getPopularMovies();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };
