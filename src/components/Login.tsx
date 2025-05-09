@@ -1,4 +1,5 @@
 import Header from './Header';
+import GuestCard from './GuestCard';
 import { auth } from '../../firebase';
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
@@ -113,6 +114,7 @@ const Login = () => {
           </p>
         </form>
       </div>
+      <GuestCard email="Guest@netflix.com" password="Netflix@00" />
     </div>
   );
 };
