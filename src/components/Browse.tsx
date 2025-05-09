@@ -7,6 +7,7 @@ import GptMovieSuggestion from './gpt/GptMovieSuggestion';
 import usePopularMovies from '../hooks/usePopularMovies';
 import useUpcomingMovies from '../hooks/useUpcomingMovies';
 import useNowPlayingMovies from '../hooks/useNowPlayingMovies';
+import Footer from './Footer';
 
 const Browse = () => {
   const showGptSearch = useSelector((store: RootState) => store.gpt.showGptSearch);
@@ -26,6 +27,7 @@ const Browse = () => {
           <MovieContainer />
         </>
       )}
+      <Footer />
     </>
   );
 };
