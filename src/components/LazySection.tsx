@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const LazySection = ({
   children,
-  placeholderHeight = 400, // adjust as needed
+  placeholderHeight = 400,
 }: {
   children: React.ReactNode;
   placeholderHeight?: number;
@@ -15,7 +15,6 @@ const LazySection = ({
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
-          console.log('LazySection loaded!'); // <-- Add this line
           observer.disconnect();
         }
       },
